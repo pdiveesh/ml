@@ -1,0 +1,28 @@
+ fromsklearn.datasetsimport load_iris
+ fromsklearn.model_selectionimport train_test_split
+ fromsklearn.neighborsimportKNeighborsClassifier
+ fromsklearn.metricsimportaccuracy_score
+ #LoadtheIrisdataset
+ iris=load_iris()
+ X=iris.data
+ y=iris.target
+# Split the dataset into training and testing sets
+ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+ # Train the k-Nearest Neighbors classifier
+ k = 3 #Numberof neighbors
+ knn = KNeighborsClassifier(n_neighbors=k)
+ knn.fit(X_train, y_train)
+ # Predict classes for the test set
+ y_pred = knn.predict(X_test)
+ # Calculate accuracy
+ accuracy = accuracy_score(y_test, y_pred)
+ print("Accuracy:", accuracy)
+ # Print correct and wrong predictions
+ print("Correct predictions:")
+ for i in range(len(y_test)):
+ if y_test[i] == y_pred[i]:
+ print("Predicted:", iris.target_names[y_pred[i]], "| Actual:", iris.target_names[y_test[i]])
+ print("\nWrong predictions:")
+ for i in range(len(y_test)):
+ if y_test[i] != y_pred[i]:
+ print("Predicted:", iris.target_names[y_pred[i]], "| Actual:", iris.target_names[y_test[i]])
